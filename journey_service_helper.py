@@ -2,6 +2,7 @@ import requests
 from requests_oauth2client import OAuth2Client, OAuth2ClientCredentialsAuth
 from dotenv import load_dotenv
 import os
+from datetime import datetime
 
 load_dotenv()
 URL=os.getenv("JS_URL")
@@ -24,9 +25,23 @@ def get_place_by_name(name):
     r = get_stop_places.sync(client=client, name_match=name, sort_order=GetStopPlacesSortOrder("WEIGHT"), limit=1)
     return r.stop_places[0]
 
-def get_trip_between_place_ids(start_id, dest_id):
+def get_trip_between_place_ids(start_id, dest_id, searched_time, time_is_arrival):
     from journey_service_client.journey_service_client.api.trips_v3 import get_trips_by_origin_and_destination
     from journey_service_client.journey_service_client.models.trips_by_origin_and_destination_request_body import TripsByOriginAndDestinationRequestBody
 
-    r = get_trips_by_origin_and_destination.sync(client=client, json_body=TripsByOriginAndDestinationRequestBody(origin= start_id, destination= dest_id))
-    return r.trips[0]
+    assert searched_time is None or type(searched_time) is datetime
+
+    r = get_trips_by_origin_and_destination.sync(client=client, 
+        json_body=TripsByOriginAndDestinationRequestBody(origin=start_id, 
+            destination= dest_id, 
+            date=searched_time.date(),
+            time=':'.join(str(searched_time.time()).split(":")[:2]),
+            for_arrival=time_is_arrival)
+        )
+    return r.trips
+
+def get_trip_departure_time(trip):
+    return datetime.fromisoformat(trip.legs[0].additional_properties['serviceJourney']['stopPoints'][0]['departure']['timeAimed'])
+
+def get_trip_arrival_time(trip):
+    return datetime.fromisoformat(trip.legs[-1].additional_properties['serviceJourney']['stopPoints'][-1]['arrival']['timeAimed'])
