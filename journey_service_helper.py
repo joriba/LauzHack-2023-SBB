@@ -40,8 +40,25 @@ def get_trip_between_place_ids(start_id, dest_id, searched_time, time_is_arrival
         )
     return r.trips
 
+def get_trip_polyline(trip):
+    from journey_service_client.journey_service_client.api.trips_v3 import get_trips_by_id
+
+    r = get_trips_by_id.sync(client=client, id=trip.id, include_route_projection=True)
+    coordinates = []
+    for leg in r.trips[0].legs:
+        leg_props = leg.additional_properties
+        if "serviceJourney" in leg_props:
+            coordinates.extend(leg_props["serviceJourney"]['spatialProjection']['coordinates'])
+    return coordinates
+
 def get_trip_departure_time(trip):
-    return datetime.fromisoformat(trip.legs[0].additional_properties['serviceJourney']['stopPoints'][0]['departure']['timeAimed'])
+    leg_props =trip.legs[0].additional_properties
+    if 'start' in leg_props:
+        return datetime.fromisoformat(leg_props['start']['timeAimed'])
+    return datetime.fromisoformat(leg_props['serviceJourney']['stopPoints'][0]['departure']['timeAimed'])
 
 def get_trip_arrival_time(trip):
-    return datetime.fromisoformat(trip.legs[-1].additional_properties['serviceJourney']['stopPoints'][-1]['arrival']['timeAimed'])
+    leg_props =trip.legs[-1].additional_properties
+    if 'stop' in leg_props:
+        return datetime.fromisoformat(leg_props['stop']['timeAimed'])
+    return datetime.fromisoformat(leg_props['serviceJourney']['stopPoints'][-1]['arrival']['timeAimed'])
