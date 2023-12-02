@@ -59,6 +59,6 @@ def get_trip_departure_time(trip):
 
 def get_trip_arrival_time(trip):
     leg_props =trip.legs[-1].additional_properties
-    if 'stop' in leg_props:
-        return datetime.fromisoformat(leg_props['stop']['timeAimed'])
+    if 'end' in leg_props:
+        return datetime.fromisoformat(leg_props['end']['timeAimed'])
     return datetime.fromisoformat(leg_props['serviceJourney']['stopPoints'][-1]['arrival']['timeAimed'])
