@@ -1,6 +1,6 @@
 from journey_service_helper import get_place_by_name, get_trip_between_place_ids
 from journey_maps_helper import get_journey_for_trip_id
-from gmaps_distance_helper import get_closest_by_car
+from gmaps_helper import get_closest_by_car
 
 geneva_id = get_place_by_name("Genève").id
 zurich_id = get_place_by_name("Zürich").id
