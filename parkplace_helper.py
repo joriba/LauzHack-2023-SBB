@@ -1,10 +1,15 @@
 import requests
 from geographiclib.geodesic import Geodesic
 
-PARKSPACE_URL = "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/mobilitat/records?select=bezeichnung_offiziell%2Cgeopos&where=parkrail_anzahl%20%3E%200&limit=-1"
+PARKSPACE_URL = "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/mobilitat/records?select=bezeichnung_offiziell%2Cgeopos&where=parkrail_anzahl%20%3E%200&limit=100"
+
+N_SPOTS = 1000
 
 def get_all_available_parkings():
-    return requests.get(PARKSPACE_URL).json()["results"]
+    result = []
+    for i in range(int(N_SPOTS / 100)):
+        result.extend(requests.get(PARKSPACE_URL + f"&offset={i*100}").json()["results"])
+    return result
 
 def closest_parkings(lat, lon, count) -> list[dict[str, str|float]]:
     geod = Geodesic.WGS84 
