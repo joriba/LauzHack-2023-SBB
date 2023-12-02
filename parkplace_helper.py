@@ -6,7 +6,7 @@ PARKSPACE_URL = "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/mobilitat
 def get_all_available_parkings():
     return requests.get(PARKSPACE_URL).json()["results"]
 
-def closest_parkings(lat, lon, count):
+def closest_parkings(lat, lon, count) -> list[dict[str, str|float]]:
     geod = Geodesic.WGS84 
     parkings = get_all_available_parkings()
     parkings.sort(key = lambda x: geod.Inverse(lat,lon, x["geopos"]["lat"], x["geopos"]["lon"])["s12"])
