@@ -1,0 +1,17 @@
+services:
+  website:
+    build: .
+    ports:
+      - 80:5000
+    environment:
+      - JS_URL:${JS_URL}
+      - JS_CLIENT_SECRET:${JS_CLIENT_SECRET}
+      - JS_CLIENT_ID:${JS_CLIENT_ID}
+      - JS_SCOPE:${JS_SCOPE}
+      - JS_TOKEN_ENDPOINT:${JS_TOKEN_ENDPOINT}
+      - JS_AUTHORIZE_ENDPOINT:${JS_AUTHORIZE_ENDPOINT}
+      - JM_URL:${JM_URL}
+      - JM_API_KEY:${JM_API_KEY}
+      - JMT_URL:${JMT_URL}
+      - JMT_API_KEY:${JMT_API_KEY}
+      - GMAPS_API_KEY:${GMAPS_API_KEY}
