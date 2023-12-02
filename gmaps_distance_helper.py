@@ -15,6 +15,6 @@ BASE_PARAMS = {
     "key": API_KEY,
 }
 
-def get_closest_by_car(origin: str, destinatinons: list[str]):
+def get_closest_by_car(origin, destinatinons: list[str]):
     gmaps = googlemaps.Client(key=API_KEY)
     return gmaps.distance_matrix([origin], destinatinons)
