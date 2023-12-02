@@ -1,0 +1,14 @@
+from enum import Enum
+
+
+class SituationCauseEnum(str, Enum):
+    CONSTRUCTION_SITE = "CONSTRUCTION_SITE"
+    DELAY = "DELAY"
+    DISTURBANCE = "DISTURBANCE"
+    END_MESSAGE = "END_MESSAGE"
+    INFORMATION = "INFORMATION"
+    TRAIN_REPLACEMENT_BY_BUS = "TRAIN_REPLACEMENT_BY_BUS"
+    VOCAL_ANNOUNCEMENT_ON_VEHICLE = "VOCAL_ANNOUNCEMENT_ON_VEHICLE"
+
+    def __str__(self) -> str:
+        return str(self.value)
