@@ -17,3 +17,6 @@ def get_closest_by_car(origin, destinations: list):
 
 def geocode(origin: str):
     return gmaps.geocode(origin)
+
+def coordinate(origin: str):
+    return (geocode(origin)[0]['geometry']['location']["lat"], geocode(origin)[0]['geometry']['location']["lng"])
