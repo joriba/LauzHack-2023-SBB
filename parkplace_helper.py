@@ -4,12 +4,15 @@ from geographiclib.geodesic import Geodesic
 PARKSPACE_URL = "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/mobilitat/records?select=bezeichnung_offiziell%2Cgeopos&where=parkrail_anzahl%20%3E%200&limit=100"
 
 N_SPOTS = 1000
+cached_parkings = None
 
 def get_all_available_parkings():
-    result = []
-    for i in range(int(N_SPOTS / 100)):
-        result.extend(requests.get(PARKSPACE_URL + f"&offset={i*100}").json()["results"])
-    return result
+    global cached_parkings
+    if cached_parkings is None:
+        cached_parkings = []
+        for i in range(int(N_SPOTS / 100)):
+            cached_parkings.extend(requests.get(PARKSPACE_URL + f"&offset={i*100}").json()["results"])
+    return cached_parkings
 
 def closest_parkings(lat, lon, count):
     geod = Geodesic.WGS84 
@@ -19,4 +22,5 @@ def closest_parkings(lat, lon, count):
     parkings = [{"name": x["bezeichnung_offiziell"], "lat":x["geopos"]["lat"], "lon":x["geopos"]["lon"]} for x in parking]
     return parkings
 
+get_all_available_parkings()
 # print(closest_parkings(46.5203, 6.566, 10))

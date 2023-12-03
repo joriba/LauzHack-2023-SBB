@@ -4,6 +4,7 @@ from canton import Canton
 from gmaps_helper import geocode, coordinate
 from parking_spots_finder import closest_by_car_time, all_trips_for_departure_time, all_trips_for_arrival_time
 from gmaps_helper import get_travel_time_by_car
+from journey_service_helper import get_map_url_for_trip
 import datetime
 import time
 from datetime import datetime
@@ -70,6 +71,7 @@ def index():
             f'<span style="color: red;"> <br> Distance by car for the whole journey: {car_info["distance"]["text"]} </span>'
             f'<br> So you saved: {(car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/100000 * 6} litres of fuel, giving'
             f'<br> So you saved: {(car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/100000 * 6 * 1.8} CHF saved'
+            f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"])}">' 
             for el in arr
             ]
 
