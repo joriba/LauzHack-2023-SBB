@@ -27,7 +27,7 @@ let first = combined[0]
 let last = combined[combined.length - 1]
 
 let middle = [(first[0] + last[0]) / 2, (first[1] + last[1]) / 2]
-let approx_length = Math.sqrt((first[0] - last[0])*(first[0] - last[0]) + (first[1] - last[1]) * (first[1] - last[1]))
+let approx_length = Math.sqrt((first[0] - last[0])*(first[0] - last[0]) * 0.681 * 0.681 + (first[1] - last[1]) * (first[1] - last[1]))
 
 console.log("Approx length:" + approx_length)
 
@@ -44,7 +44,7 @@ const map = new Map({
   ],
   view: new View({
     center: fromLonLat(middle, 'EPSG:3857'),
-    zoom: 11 - approx_length
+    zoom: 9 - Math.log2(approx_length)
   })
 });
 
