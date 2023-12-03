@@ -52,14 +52,26 @@ def index():
             # does not work - problem: 
             # File "/home/natali/Desktop/hackathon/LauzHack-2023-SBB/journey_service_helper.py", line 41, in get_trip_between_place_ids return r.trips
 
-
-        print(arr)
-
         # formatted_arr = Markup('<br>'.join(map(str, arr)))
         arr = choose(arr, criterium=criterium)
 
-        processed_result = f"Closest train stations to {user_input1} to travel by car: <br> {arr}"
-        return render_template('sbb_result.html', result=processed_result)
+
+
+        # formatting:
+
+        formatted_arr = [
+            f'Departure time: {el["Departure Time"].strftime("%Y-%m-%d %H:%M:%S %z")[:-6]}'
+            f'<br> Arrival time: {el["Arrival Time"].strftime("%Y-%m-%d %H:%M:%S %z")[:-6]}'
+            f'<br> Parking spot: {el["Parking Spot"]}'
+            f'<br> Distance by car: {el["Distance by Car"]["distance"]["text"]}' 
+            for el in arr
+            ]
+
+        f_arr = Markup('<br> <br> <br>'.join(map(str, formatted_arr)))
+
+        # processed_result = f"Closest train stations to {user_input1} to travel by car: <br> {f_arr}"
+        return render_template('sbb_result.html', result=f_arr)
+
     return render_template('sbb_index.html')
 
 
