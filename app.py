@@ -48,7 +48,7 @@ def index():
         if not current:
             arr = all_trips_for_departure_time(start_time, origin_lat, origin_lon, dest_lat, dest_lon, 5)
         
-        car_info = get_travel_time_by_car((origin_lat, origin_lon), (origin_lat, origin_lon))
+        car_info = get_travel_time_by_car((origin_lat, origin_lon), (dest_lat, dest_lon))
         print(car_info)
         non_eco = car_info['distance']['value']
         
@@ -58,7 +58,7 @@ def index():
             # File "/home/natali/Desktop/hackathon/LauzHack-2023-SBB/journey_service_helper.py", line 41, in get_trip_between_place_ids return r.trips
 
         # formatted_arr = Markup('<br>'.join(map(str, arr)))
-        arr = choose(arr, criterium=criterium)[:5]
+        arr = choose(arr, criterium=criterium)[:3]
 
 
         # formatting:
@@ -70,8 +70,8 @@ def index():
             f'<br> Distance by car: {el["Distance by Car"]["distance"]["text"]}'
             f'<span style="color: red;"> <br> Distance by car for the whole journey: {car_info["distance"]["text"]} </span>'
             f'<br> So you saved: {(car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/100000 * 6} litres of fuel, giving'
-            f'<br> So you saved: {(car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/100000 * 6 * 1.8} CHF saved'
-            f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"])}">' 
+            f'<br> So you saved: {(car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/100000 * 6 * 1.8} CHF in fuel'
+            #f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"])}">' 
             for el in arr
             ]
 
