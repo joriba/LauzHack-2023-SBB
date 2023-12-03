@@ -33,9 +33,11 @@ def all_trips_for_arrival_time(arrival_time, origin_lat, origin_lon, dest_lat, d
             departure_time = journey_service_helper.get_trip_departure_time(trip)
             car_arrival_time = departure_time - TRANSFER_TIME
             car_departure_time = car_arrival_time - datetime.timedelta(seconds=spot[2]["duration"]["value"])
+            total_arrival_time = journey_service_helper.get_trip_arrival_time(trip)
             result.append({
                 "Departure Time": car_departure_time,
-                "Arrival Time": journey_service_helper.get_trip_arrival_time(trip),
+                "Arrival Time": total_arrival_time,
+                "Total Duration": total_arrival_time - car_departure_time,
                 "Parking Spot": spot[0],
                 "Distance by Car": spot[2]
             }) 
@@ -59,17 +61,26 @@ def all_trips_for_departure_time(start_time, origin_lat, origin_lon, dest_lat, d
             result.append({
                 "Departure Time": car_departure_time,
                 "Arrival Time": arrival_time,
+                "Total Duration": arrival_time - car_departure_time,
                 "Parking Spot": spot[0],
                 "Distance by Car": spot[2]
             }) 
         
     return result
 
-# this_afternoon = datetime.datetime.fromtimestamp(time.time()) - datetime.timedelta(hours=8)
-# coords_lausanne = gmaps_helper.coordinate("Ecublens")
-# coords_bolligen = gmaps_helper.coordinate("Bolligen")
-# for trip in all_trips_for_arrival_time(this_afternoon, coords_lausanne[0], coords_lausanne[1], coords_bolligen[0], coords_bolligen[1], 10):
+# now = datetime.datetime.fromtimestamp(time.time())
+# this_afternoon = now - datetime.timedelta(hours=8)
+# coords_lausanne = gmaps_helper.coordinate("Arnex")
+# coords_bolligen = gmaps_helper.coordinate("St. Gallen")
+# # trips = all_trips_for_arrival_time(now, coords_lausanne[0], coords_lausanne[1], coords_bolligen[0], coords_bolligen[1], 2)
+# # for trip in trips:
+# print("By departure time:")
+# trips = all_trips_for_departure_time(now, coords_lausanne[0], coords_lausanne[1], coords_bolligen[0], coords_bolligen[1], 2)
+# for trip in trips:
 #     print(trip, "\n")
+# print("By arrival time:")
+# trips = all_trips_for_arrival_time(now, coords_lausanne[0], coords_lausanne[1], coords_bolligen[0], coords_bolligen[1], 2)
+# print(trips[0], "\n")
 # print(closest_parkings(46.5203, 6.566, 10))
 # 46.9467632, 7.4409836
 # coords = gmaps_helper.geocode("Chem. des Fleurs de Lys, 1350 Orbe")[0]['geometry']['location']
