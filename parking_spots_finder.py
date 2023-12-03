@@ -49,7 +49,7 @@ def all_trips_for_departure_time(start_time, origin_lat, origin_lon, dest_lat, d
         coords = spot[1]
         origin_string = f'{[coords[1], coords[0]]}'.replace(" ", "")
         dest_string = f'{[dest_lon, dest_lat]}'.replace(" ", "")
-        train_departure_time = start_time + spot[2]["duration"]["value"] + TRANSFER_TIME
+        train_departure_time = start_time + datetime.timedelta(seconds=spot[2]["duration"]["value"]) + TRANSFER_TIME
         trips = journey_service_helper.get_trip_between_place_ids(origin_string, dest_string, train_departure_time, False)
         for trip in trips:
             arrival_time = journey_service_helper.get_trip_arrival_time(trip)
@@ -65,11 +65,11 @@ def all_trips_for_departure_time(start_time, origin_lat, origin_lon, dest_lat, d
         
     return result
 
-this_afternoon = datetime.datetime.fromtimestamp(time.time()) - datetime.timedelta(hours=8)
-coords_lausanne = gmaps_helper.coordinate("Ecublens")
-coords_bolligen = gmaps_helper.coordinate("Bolligen")
-for trip in all_trips_for_arrival_time(this_afternoon, coords_lausanne[0], coords_lausanne[1], coords_bolligen[0], coords_bolligen[1], 10):
-    print(trip, "\n")
+# this_afternoon = datetime.datetime.fromtimestamp(time.time()) - datetime.timedelta(hours=8)
+# coords_lausanne = gmaps_helper.coordinate("Ecublens")
+# coords_bolligen = gmaps_helper.coordinate("Bolligen")
+# for trip in all_trips_for_arrival_time(this_afternoon, coords_lausanne[0], coords_lausanne[1], coords_bolligen[0], coords_bolligen[1], 10):
+#     print(trip, "\n")
 # print(closest_parkings(46.5203, 6.566, 10))
 # 46.9467632, 7.4409836
 # coords = gmaps_helper.geocode("Chem. des Fleurs de Lys, 1350 Orbe")[0]['geometry']['location']
