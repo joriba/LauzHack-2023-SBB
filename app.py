@@ -95,6 +95,8 @@ def choose(arr, criterium=''):
         return sorted(arr, key=lambda x: x['Total Duration'])
     if criterium == "duration_by_car":
         return sorted(arr, key=lambda x: (x['Distance by Car']['distance']['value'], x['Total Duration']))
+    if criterium == "arrival_time":
+        return sorted(arr, key=lambda x: (x['Arrival Time']))
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
