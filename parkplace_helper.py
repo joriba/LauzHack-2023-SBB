@@ -11,7 +11,11 @@ def get_all_available_parkings():
     if cached_parkings is None:
         cached_parkings = []
         for i in range(int(N_SPOTS / 100)):
-            cached_parkings.extend(requests.get(PARKSPACE_URL + f"&offset={i*100}").json()["results"])
+            new_ones = requests.get(PARKSPACE_URL + f"&offset={i*100}").json()["results"]
+            for x in new_ones:
+                if not any(x['bezeichnung_offiziell'] == y['bezeichnung_offiziell'] for y in cached_parkings):
+                    cached_parkings.append(x)
+            cached_parkings
     return cached_parkings
 
 def closest_parkings(lat, lon, count):
