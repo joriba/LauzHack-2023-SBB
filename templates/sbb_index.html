@@ -1948,14 +1948,21 @@
                     <input placeholder="> Enter ending point" type="text" id="user_input" name="user_input2" required style="width: 100%;">
                     <br>
                     <div style="border-bottom: 2px solid grey; margin-bottom: 8px; border-bottom: 2px solid rgba(0, 0, 0, 0.1);"></div>
-                    <label for="user_input">Departure time:</label>
+                    <label for="user_input">Departure time (optional):</label>
                     <input type="datetime-local" id="user_input" name="user_input3" style="width: 100%;">
                     <br>
                     <div style="border-bottom: 2px solid grey; margin-bottom: 8px; border-bottom: 2px solid rgba(0, 0, 0, 0.1);"></div>
-                    <label for="user_input">Arrival time:</label>
+                    <label for="user_input">Arrival time (optional):</label>
                     <input type="datetime-local" id="user_input" name="user_input4" style="width: 100%;">
                     <br>
                     <div style="border-bottom: 2px solid grey; margin-bottom: 8px; border-bottom: 2px solid rgba(0, 0, 0, 0.1);"></div>
+
+
+                    <label for="sorting_criterion">Choose Sorting Criterion:</label>
+                        <select id="sorting_criterion" name="sorting_criterion" required style="width: 100%; background-color: white;">
+                            <option value="total_duration">Total Duration of the Trip</option>
+                            <option value="duration_by_car">Duration by Car</option>
+                        </select>
                     
                     <button type="submit">Submit</button>
 
