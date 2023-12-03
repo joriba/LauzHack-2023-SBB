@@ -39,7 +39,8 @@ def all_trips_for_arrival_time(arrival_time, origin_lat, origin_lon, dest_lat, d
                 "Arrival Time": total_arrival_time,
                 "Total Duration": total_arrival_time - car_departure_time,
                 "Parking Spot": spot[0],
-                "Distance by Car": spot[2]
+                "Distance by Car": spot[2],
+                "TripData": trip
             }) 
         
     return result
@@ -63,7 +64,8 @@ def all_trips_for_departure_time(start_time, origin_lat, origin_lon, dest_lat, d
                 "Arrival Time": arrival_time,
                 "Total Duration": arrival_time - car_departure_time,
                 "Parking Spot": spot[0],
-                "Distance by Car": spot[2]
+                "Distance by Car": spot[2],
+                "TripData": trip
             }) 
         
     return result
