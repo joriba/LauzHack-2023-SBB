@@ -3,6 +3,7 @@ from markupsafe import Markup
 from canton import Canton
 from gmaps_helper import geocode, coordinate
 from parking_spots_finder import closest_by_car_time, all_trips_for_departure_time, all_trips_for_arrival_time
+from journey_service_helper import get_map_url_for_trip
 import datetime
 import time
 from datetime import datetime
@@ -64,6 +65,7 @@ def index():
             f'<br> Arrival time: {el["Arrival Time"].strftime("%Y-%m-%d %H:%M:%S %z")[:-6]}'
             f'<br> Parking spot: {el["Parking Spot"]}'
             f'<br> Distance by car: {el["Distance by Car"]["distance"]["text"]}' 
+            f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"])}">' 
             for el in arr
             ]
 
