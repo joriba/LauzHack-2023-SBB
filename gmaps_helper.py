@@ -12,8 +12,14 @@ BASE_PARAMS = {
     "key": API_KEY,
 }
 
-def get_closest_by_car(origin, destinatinons: list):
-    return gmaps.distance_matrix([origin], destinatinons)
+def get_closest_by_car(origin, destinations: list):
+    return gmaps.distance_matrix([origin], destinations)
 
 def geocode(origin: str):
     return gmaps.geocode(origin)
+
+def coordinate(origin: str):
+    return (geocode(origin)[0]['geometry']['location']["lat"], geocode(origin)[0]['geometry']['location']["lng"])
+
+def get_travel_time_by_car(origin, destination):
+    return gmaps.distance_matrix([origin], [destination])["rows"][0]["elements"][0]
