@@ -69,10 +69,12 @@ def index():
             f'<br> Arrival time: {el["Arrival Time"].strftime("%Y-%m-%d %H:%M:%S %z")[:-6]}'
             f'<br> Parking spot: {el["Parking Spot"]}'
             f'<br> Distance to be traveled by car: {el["Distance by Car"]["distance"]["text"]}'
+            f'<br> '
             f'<span style="color: red;"> <br> Duration by car for the whole journey: {car_info["duration"]["text"]} </span>'
             f'<span style="color: green;"> <br> This trip is: {round((car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/(car_info["distance"]["value"] + 1) * 100, 2)}% more energy efficient</span>'
             f'</div>'
             #f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"])}">' 
+            f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"], el["Car Polyline"])}"></iframe>'
             for el in arr
             ]
 

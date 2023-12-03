@@ -28,6 +28,9 @@ def all_trips_for_arrival_time(arrival_time, origin_lat, origin_lon, dest_lat, d
         coords = spot[1]
         origin_string = f'{[coords[1], coords[0]]}'.replace(" ", "")
         dest_string = f'{[dest_lon, dest_lat]}'.replace(" ", "")
+        car_trip_polyline = gmaps_helper.get_polyline_for_car(
+            f"{origin_lat},{origin_lon}", f"{coords[0]},{coords[1]}"
+        )
         trips = journey_service_helper.get_trip_between_place_ids(origin_string, dest_string, arrival_time, True)
         for trip in trips:
             departure_time = journey_service_helper.get_trip_departure_time(trip)
@@ -40,7 +43,8 @@ def all_trips_for_arrival_time(arrival_time, origin_lat, origin_lon, dest_lat, d
                 "Total Duration": total_arrival_time - car_departure_time,
                 "Parking Spot": spot[0],
                 "Distance by Car": spot[2],
-                "TripData": trip
+                "TripData": trip,
+                "Car Polyline": car_trip_polyline
             }) 
         
     return result
@@ -52,6 +56,9 @@ def all_trips_for_departure_time(start_time, origin_lat, origin_lon, dest_lat, d
         coords = spot[1]
         origin_string = f'{[coords[1], coords[0]]}'.replace(" ", "")
         dest_string = f'{[dest_lon, dest_lat]}'.replace(" ", "")
+        car_trip_polyline = gmaps_helper.get_polyline_for_car(
+            f"{origin_lat},{origin_lon}", f"{coords[0]},{coords[1]}"
+        )
         train_departure_time = start_time + datetime.timedelta(seconds=spot[2]["duration"]["value"]) + TRANSFER_TIME
         trips = journey_service_helper.get_trip_between_place_ids(origin_string, dest_string, train_departure_time, False)
         for trip in trips:
@@ -65,21 +72,22 @@ def all_trips_for_departure_time(start_time, origin_lat, origin_lon, dest_lat, d
                 "Total Duration": arrival_time - car_departure_time,
                 "Parking Spot": spot[0],
                 "Distance by Car": spot[2],
-                "TripData": trip
+                "TripData": trip,
+                "Car Polyline": car_trip_polyline
             }) 
         
     return result
 
 # now = datetime.datetime.fromtimestamp(time.time())
 # this_afternoon = now - datetime.timedelta(hours=8)
-# coords_lausanne = gmaps_helper.coordinate("Arnex")
+# coords_lausanne = gmaps_helper.coordinate("Ecublens")
 # coords_bolligen = gmaps_helper.coordinate("St. Gallen")
 # # trips = all_trips_for_arrival_time(now, coords_lausanne[0], coords_lausanne[1], coords_bolligen[0], coords_bolligen[1], 2)
 # # for trip in trips:
 # print("By departure time:")
 # trips = all_trips_for_departure_time(now, coords_lausanne[0], coords_lausanne[1], coords_bolligen[0], coords_bolligen[1], 2)
-# for trip in trips:
-#     print(trip, "\n")
+# # for trip in trips:
+# print(trips[0]["Car Polyline"], "\n")
 # print("By arrival time:")
 # trips = all_trips_for_arrival_time(now, coords_lausanne[0], coords_lausanne[1], coords_bolligen[0], coords_bolligen[1], 2)
 # print(trips[0], "\n")

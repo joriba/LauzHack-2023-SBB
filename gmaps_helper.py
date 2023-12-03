@@ -1,4 +1,5 @@
 import googlemaps
+from googlemaps.convert import decode_polyline
 from dotenv import load_dotenv
 import os
 
@@ -23,3 +24,6 @@ def coordinate(origin: str):
 
 def get_travel_time_by_car(origin, destination):
     return gmaps.distance_matrix([origin], [destination])["rows"][0]["elements"][0]
+
+def get_polyline_for_car(origin, destination):
+    return [[point["lng"], point["lat"]] for point in decode_polyline(gmaps.directions(origin, destination)[0]["overview_polyline"]["points"])]
