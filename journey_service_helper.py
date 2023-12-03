@@ -12,6 +12,8 @@ SCOPE=os.getenv("JS_SCOPE")
 TOKEN_ENDPOINT=os.getenv("JS_TOKEN_ENDPOINT")
 AUTHORIZE_ENDPOINT=os.getenv("JS_AUTHORIZE_ENDPOINT")
 
+JMT_API_KEY=os.getenv("JMT_API_KEY")
+
 oauth2client = OAuth2Client(token_endpoint=TOKEN_ENDPOINT, client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
 token = oauth2client.client_credentials(scope=SCOPE)
 
@@ -53,7 +55,7 @@ def get_trip_polyline(trip):
 
 def get_map_url_for_trip(trip):
     coordinates = get_trip_polyline(trip)
-    return "/static/map/dist/index.html#"+str(coordinates)
+    return "/static/map/dist/index.html?"+JMT_API_KEY+"#"+str(coordinates)
 
 def get_trip_departure_time(trip):
     leg_props =trip.legs[0].additional_properties

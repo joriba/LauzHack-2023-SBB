@@ -8,6 +8,8 @@ import LineString from 'ol/geom/LineString';
 import Feature from 'ol/Feature';
 import {Fill, Style, Stroke} from 'ol/style';
 import {fromLonLat} from 'ol/proj';
+//import VectorTile from 'ol/source/VectorTile.js';
+import TileImage from 'ol/source/TileImage.js';
 
 let coordinates = eval(decodeURIComponent(window.location.hash.substring(1)))
 if(coordinates == undefined){
@@ -15,11 +17,15 @@ if(coordinates == undefined){
 }
 coordinates = coordinates.map(x => fromLonLat(x, 'EPSG:3857'))
 
+const api_key = new URL(window.location.href).search.substring(1)
+
 const map = new Map({
   target: 'map',
   layers: [
     new TileLayer({
-      source: new OSM()
+      source: new TileImage({
+        url: "https://journey-maps-tiles.geocdn.sbb.ch/styles/base_bright_v2/{z}/{x}/{y}.webp?api_key="+api_key
+      })
     })
   ],
   view: new View({
