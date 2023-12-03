@@ -71,7 +71,7 @@ def index():
             f'<span style="color: red;"> <br> Distance by car for the whole journey: {car_info["distance"]["text"]} </span>'
             f'<br> So you saved: {(car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/100000 * 6} litres of fuel, giving'
             f'<br> So you saved: {(car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/100000 * 6 * 1.8} CHF in fuel'
-            f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"])}"></iframe>' 
+            f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"], el["Car Polyline"])}"></iframe>' 
             for el in arr
             ]
 

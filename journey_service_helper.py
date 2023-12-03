@@ -53,9 +53,9 @@ def get_trip_polyline(trip):
             coordinates.extend(leg_props["serviceJourney"]['spatialProjection']['coordinates'])
     return coordinates
 
-def get_map_url_for_trip(trip):
+def get_map_url_for_trip(trip, car_polyline):
     coordinates = get_trip_polyline(trip)
-    return "/static/map/dist/index.html?"+JMT_API_KEY+"#"+str([[],coordinates])
+    return "/static/map/dist/index.html?"+JMT_API_KEY+"#"+str([car_polyline,coordinates])
 
 def get_trip_departure_time(trip):
     leg_props =trip.legs[0].additional_properties
