@@ -1923,7 +1923,7 @@
 <link rel="stylesheet" href="https://cdn.app.sbb.ch/base/12.64.206/css/main_dssc.min.css"/>
 <script>/**/</script>
     
-    <main id="main" itemprop="mainContentOfPage" role="main">
+    <main id="main" itemprop="mainContentOfPage" role="main" style="display: flex; flex-direction: column; background-color: red; background: linear-gradient(to bottom, red 36%, white 36%); width: 90%; margin: 0 auto;">
 
     
     <div class="layout_center">
@@ -1936,34 +1936,38 @@
 
     
     
+        <div style="background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); flex-grow: 1; margin: 20px;">
     
-
-        <h1 class="mod_pagetitle ">Finding route!!!!
-        
-        </h1>
+            
     
-        <div class="mod_lead_text ">
+            <div class="mod_lead_text" style="text-align: left;">
                 <form method="post">
-                    <label for="user_input">Enter starting point:</label>
-                    <input type="text" id="user_input" name="user_input1" required>
+                    <input placeholder="> Enter starting point" type="text" id="user_input" name="user_input1" required style="width: 100%;">
                     <br>
-                    <label for="user_input">Enter ending point:</label>
-                    <input type="text" id="user_input" name="user_input2" required>
+                    <div style="border-bottom: 2px solid grey; margin-bottom: 8px; border-bottom: 2px solid rgba(0, 0, 0, 0.1);"></div>
+                    <input placeholder="> Enter ending point" type="text" id="user_input" name="user_input2" required style="width: 100%;">
                     <br>
+                    <div style="border-bottom: 2px solid grey; margin-bottom: 8px; border-bottom: 2px solid rgba(0, 0, 0, 0.1);"></div>
+                    <label for="user_input">Departure time:</label>
+                    <input type="datetime-local" id="user_input" name="user_input3" style="width: 100%;">
+                    <br>
+                    <div style="border-bottom: 2px solid grey; margin-bottom: 8px; border-bottom: 2px solid rgba(0, 0, 0, 0.1);"></div>
+                    <label for="user_input">Arrival time:</label>
+                    <input type="datetime-local" id="user_input" name="user_input4" style="width: 100%;">
+                    <br>
+                    <div style="border-bottom: 2px solid grey; margin-bottom: 8px; border-bottom: 2px solid rgba(0, 0, 0, 0.1);"></div>
+                    
                     <button type="submit">Submit</button>
+
                 </form>
-    
             </div>
     
-            
-        <div class="mod_lead_text ">
-            
-        
-            <p>WRITE YOUR TEXT HERE</p>
-    
-        
+            <div class="mod_lead_text">
+                <p>WRITE YOUR TEXT HERE</p>
+            </div>
     
         </div>
+
 
 
     <!--------------------------------Our Code----------------------------------->
