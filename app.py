@@ -64,13 +64,14 @@ def index():
         # formatting:
 
         formatted_arr = [
+            f'<div style="border: 1px solid lightgray; padding: 10px;">'
             f'Departure time: {el["Departure Time"].strftime("%Y-%m-%d %H:%M:%S %z")[:-6]}'
             f'<br> Arrival time: {el["Arrival Time"].strftime("%Y-%m-%d %H:%M:%S %z")[:-6]}'
             f'<br> Parking spot: {el["Parking Spot"]}'
-            f'<br> Distance by car: {el["Distance by Car"]["distance"]["text"]}'
-            f'<span style="color: red;"> <br> Distance by car for the whole journey: {car_info["distance"]["text"]} </span>'
-            f'<br> So you saved: {(car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/100000 * 6} litres of fuel, giving'
-            f'<br> So you saved: {(car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/100000 * 6 * 1.8} CHF in fuel'
+            f'<br> Distance to be traveled by car: {el["Distance by Car"]["distance"]["text"]}'
+            f'<span style="color: red;"> <br> Duration by car for the whole journey: {car_info["duration"]["text"]} </span>'
+            f'<span style="color: green;"> <br> This trip is: {round((car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/(car_info["distance"]["value"] + 1) * 100, 2)}% more energy efficient</span>'
+            f'</div>'
             #f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"])}">' 
             for el in arr
             ]
