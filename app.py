@@ -40,5 +40,8 @@ def index():
         return render_template('sbb_result.html', result=processed_result)
     return render_template('sbb_index.html')
 
+
+def choose()
+
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")

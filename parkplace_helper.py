@@ -11,7 +11,7 @@ def get_all_available_parkings():
         result.extend(requests.get(PARKSPACE_URL + f"&offset={i*100}").json()["results"])
     return result
 
-def closest_parkings(lat, lon, count) -> list[dict[str, str|float]]:
+def closest_parkings(lat, lon, count):
     geod = Geodesic.WGS84 
     parkings = get_all_available_parkings()
     parkings.sort(key = lambda x: geod.Inverse(lat,lon, x["geopos"]["lat"], x["geopos"]["lon"])["s12"])
