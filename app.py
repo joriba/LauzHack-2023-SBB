@@ -77,7 +77,6 @@ def index():
                 f'<span style="color: green;"> <br> This trip is: {round((car_info["distance"]["value"] - el["Distance by Car"]["distance"]["value"])/(car_info["distance"]["value"] + 1) * 100, 2)}% more energy efficient</span>'
                 f'</div>'
                 '</summary>'
-                f'<br>trip id: {sha256(el["TripData"].id.encode()).digest().hex()}'
                 f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"], el["Car Polyline"])}"></iframe>' 
             '</details>'
             for i,el in enumerate(arr)
