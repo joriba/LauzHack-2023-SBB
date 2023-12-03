@@ -64,7 +64,7 @@ def index():
         # formatting:
 
         formatted_arr = [
-            '<details>'
+            f'<details{" open" if i == 0 else ""}>'
                 '<summary>'
                 f'<div style="border: 1px solid lightgray; padding: 10px;">'
                 f'Departure time: {el["Departure Time"].strftime("%Y-%m-%d %H:%M:%S %z")[:-6]}'
@@ -78,7 +78,7 @@ def index():
                 '</summary>'
                 f'<br> <iframe width="800px" height="600px" src="{get_map_url_for_trip(el["TripData"], el["Car Polyline"])}"></iframe>' 
             '</details>'
-            for el in arr
+            for i,el in enumerate(arr)
             ]
 
         f_arr = Markup('<br> <br> <br>'.join(map(str, formatted_arr)))
