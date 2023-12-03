@@ -21,6 +21,7 @@ for i, trip in enumerate(trips):
 
 polyline = get_trip_polyline(trips[-1])
 print("Line:",len(polyline))
+print(polyline)
 
 r = get_journey_for_trip_id(trip.id)
 print(len(r.features))
