@@ -15,7 +15,21 @@ let coordinates = eval(decodeURIComponent(window.location.hash.substring(1)))
 if(coordinates == undefined){
   coordinates = []
 }
-coordinates = coordinates.map(x => fromLonLat(x, 'EPSG:3857'))
+
+let coordinates_car = coordinates[0]
+let coordinates_train = coordinates[1]
+
+let coordinates_car_proj = coordinates_car.map(x => fromLonLat(x, 'EPSG:3857'))
+let coordinates_train_proj = coordinates_train.map(x => fromLonLat(x, 'EPSG:3857'))
+
+let combined = [...coordinates_car, ...coordinates_train]
+let first = combined[0]
+let last = combined[combined.length - 1]
+
+let middle = [(first[0] + last[0]) / 2, (first[1] + last[1]) / 2]
+let approx_length = Math.sqrt((first[0] - last[0])*(first[0] - last[0]) + (first[1] - last[1]) * (first[1] - last[1]))
+
+console.log("Approx length:" + approx_length)
 
 const api_key = new URL(window.location.href).search.substring(1)
 
@@ -29,18 +43,32 @@ const map = new Map({
     })
   ],
   view: new View({
-    center: fromLonLat([8.286928794895285, 46.73678128684938], 'EPSG:3857'),
-    zoom: 8.5
+    center: fromLonLat(middle, 'EPSG:3857'),
+    zoom: 11 - approx_length
   })
 });
 
-let lineFeature = new Feature({
-            geometry: new LineString(coordinates),
-            name: 'Line'
-        })
-var layerLines = new VectorLayer({
+var layerLinesCar = new VectorLayer({
     source: new VectorSource({
-        features: [lineFeature]
+        features: [new Feature({
+            geometry: new LineString(coordinates_car_proj),
+            name: 'Line'
+        })]
+    }),
+    style: new Style({
+        fill: new Fill({ color: '#0000FF', weight: 10 }),
+        stroke: new Stroke({ color: '#0000FF', width: 5 })
+    })
+});
+
+map.addLayer(layerLinesCar)
+
+var layerLinesTrain = new VectorLayer({
+    source: new VectorSource({
+        features: [new Feature({
+            geometry: new LineString(coordinates_train_proj),
+            name: 'Line'
+        })]
     }),
     style: new Style({
         fill: new Fill({ color: '#FF0000', weight: 10 }),
@@ -48,4 +76,4 @@ var layerLines = new VectorLayer({
     })
 });
 
-map.addLayer(layerLines)
+map.addLayer(layerLinesTrain)
