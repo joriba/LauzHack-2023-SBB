@@ -1,6 +1,6 @@
 from journey_service_helper import get_place_by_name, get_trip_between_place_ids, get_trip_departure_time, get_trip_arrival_time, get_trip_polyline
 from journey_maps_helper import get_journey_for_trip_id
-from gmaps_helper import get_closest_by_car
+from gmaps_helper import get_closest_by_car, get_travel_time_by_car
 from gmaps_helper import geocode
 from datetime import datetime, timedelta
 import time
@@ -28,5 +28,8 @@ print(len(r.features))
 distances = get_closest_by_car("1020 Renens", ["Lausanne"])
 print(distances)
 
-location = geocode("Lausanne")
+location = geocode("Lausann")
 print(location)
+
+car_time = get_travel_time_by_car("Bern", "Lausanne")
+print(car_time)
